@@ -70,7 +70,10 @@ componentsBase: `npm run build:componentsBase`
 ### 代码大小分析
 `npm run analyze`
 
-### 发布
+### 发布（开发、测试、预发）
 `npm run prod`
+
+### 发布（上线）
+`npm run online`
 
 ![Vue前端架构](https://github.com/CodeLittlePrince/ImagesForGithub/blob/master/vue-construct-1.png?raw=true)
