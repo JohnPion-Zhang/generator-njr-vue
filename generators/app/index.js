@@ -52,6 +52,12 @@ module.exports = class extends Generator {
         name: 'includeVuex',
         message: 'Would you like to include Vuex in your project?',
         default: true
+      },
+      {
+        type: 'confirm',
+        name: 'includeElementUI',
+        message: 'Would you like to include element-ui in your project?',
+        default: false
       }
     ];
     return this.prompt(prompts).then(answers => {
@@ -59,10 +65,12 @@ module.exports = class extends Generator {
       this.description = answers.description;
       this.ieVersion = answers.ieVersion;
       this.includeVuex = answers.includeVuex;
+      this.includeElementUI = answers.includeElementUI;
       this.log(chalk.green('name: ', this.name));
       this.log(chalk.green('description: ', this.description));
       this.log(chalk.green('ieVersion: ', this.ieVersion));
       this.log(chalk.green('includeVuex: ', this.includeVuex));
+      this.log(chalk.green('includeElementUI: ', this.includeElementUI));
       // 处理ie version
       this.ieVersionSupport = '';
       switch (this.ieVersion) {
@@ -93,7 +101,7 @@ module.exports = class extends Generator {
         globOptions: {
           // https://github.com/isaacs/node-glob
           dot: true,
-          ignore: ['**/files-for-add-vuex']
+          ignore: ['**/@selections']
         }
       }
     );
@@ -102,31 +110,46 @@ module.exports = class extends Generator {
       name: this.name,
       description: this.description
     };
+
     // 根据用户选择，决定是否安装vuex
     if (this.includeVuex) {
       // 处理package.json
       pkgJson.dependencies = {
         vuex: '^3.0.1'
       };
-      // 覆盖含有vuex调用的文件（从src/files-for-add-vuex中提取）
+      // 覆盖含有vuex调用的文件（从src/@selections/vuex中提取）
       // 1.src/index.js
       this.fs.copy(
-        this.templatePath('src/files-for-add-vuex/index.js'),
+        this.templatePath('src/@selections/vuex/index.js'),
         this.destinationPath('src/index.js')
       );
       // 2.src/views/home/index.vue
       this.fs.copy(
-        this.templatePath('src/files-for-add-vuex/views/home/index.vue'),
+        this.templatePath('src/@selections/vuex/views/home/index.vue'),
         this.destinationPath('src/views/home/index.vue')
       );
       // 3. 把store拿出来(src/store)
       this.fs.copy(
-        this.templatePath('src/files-for-add-vuex/store'),
+        this.templatePath('src/@selections/vuex/store'),
         this.destinationPath('src/store')
       );
     }
     // Extend or create package.json file in destination path
     this.fs.extendJSON(this.destinationPath('package.json'), pkgJson);
+
+    // 根据用户选择，决定是否安装element-ui
+    if (this.includeElementUI) {
+      // 1.将element-ui拷贝到src/plugins中
+      this.fs.copy(
+        this.templatePath('src/@selections/element-ui'),
+        this.destinationPath('src/plugins/element-ui')
+      );
+      // 2.在src/plugins/index.js中加引入element-ui的代码
+      this.fs.write(
+        this.destinationPath('src/plugins/index.js'),
+        "import './element-ui'"
+      );
+    }
   }
 
   install() {
@@ -138,6 +161,10 @@ module.exports = class extends Generator {
       spawn('git', ['init']);
     }
     this.npmInstall();
+    // 如果需要，安装element-ui
+    if (this.includeElementUI) {
+      this.npmInstall(['element-ui'], { 'save-dev': true });
+    }
   }
 
   end() {

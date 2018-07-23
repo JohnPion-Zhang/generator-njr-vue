@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const webpackConfigBase = require('./webpack.config.base.js')
 const proxyConfig = require('./proxy.config.js')
+const os = require('os')
 
 const config = Object.assign(webpackConfigBase.config, {
   // sourcemap 模式
