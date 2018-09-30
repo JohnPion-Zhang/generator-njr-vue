@@ -34,6 +34,6 @@ npm config set strict-ssl false
 npm config set registry "https://registry.npm.taobao.org"
 node ./deploy/ignore.npm/ignore.js
 npm install
-npm run prepub
+npm run prod
 node ./deploy/ignore.npm/recover.js
 echo "release completed"
