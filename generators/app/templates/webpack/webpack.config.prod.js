@@ -52,7 +52,6 @@ const config = Object.assign(webpackConfigBase.config, {
     // html 模板插件
     new HtmlWebpackPlugin({
       appVersion,
-      favicon: webpackConfigBase.favicon,
       filename: 'index.html',
       template: webpackConfigBase.resolve('src/index.html'),
       minify: {
