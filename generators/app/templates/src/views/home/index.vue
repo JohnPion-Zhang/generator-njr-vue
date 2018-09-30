@@ -24,7 +24,7 @@
         '/home/hello',
         { page: 7 }
       ).then(res => {
-        console.log(`%c${res.data}`, 'color: blue')
+        console.log(`%c${res.msg}`, 'color: blue')
       }).catch(err => {
         console.error(err.text)
       })
