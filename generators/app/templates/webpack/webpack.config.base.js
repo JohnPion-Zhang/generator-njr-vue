@@ -119,7 +119,7 @@ const config = {
           extractCSS: true,
           loaders: {
             scss: extractAppCSS.extract({
-              fallback: 'style-loader',
+              fallback: 'vue-style-loader',
               use: [
                 {
                   loader: 'css-loader',
