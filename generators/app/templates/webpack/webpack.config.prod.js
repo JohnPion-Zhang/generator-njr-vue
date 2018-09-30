@@ -4,6 +4,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin')
 const exec = require('child_process').execSync
 const webpackConfigBase = require('./webpack.config.base.js')
 const pkg = require('../package.json')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 const ANALYZE = process.env.ANALYZE === 'active'
 const ONLINE = process.env.ONLINE === 'active'
