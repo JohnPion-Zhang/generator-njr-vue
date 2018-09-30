@@ -12,9 +12,8 @@ const img = Mock.Random.image('200x100')
 // 返回的结果处理
 module.exports = function() {
   return {
-    msg: 'mock kitty api',
-    data: data,
-    imgUrl: img,
-    code: 0
+    message: 'error message',
+    result: true,
+    status: '200'
   }
 }

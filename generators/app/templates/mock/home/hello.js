@@ -21,11 +21,9 @@ module.exports = function (params, key) {
         msg: 'mock hello api for success, and page is 7',
         data: data,
         imgUrl: img,
-        code: 0
       },
       'error': {
-        msg: 'mock hello api for error, and page is 7',
-        code: 1
+        msg: 'mock hello api for error, and page is 7'
       }
     }
   } else {
@@ -34,21 +32,26 @@ module.exports = function (params, key) {
         msg: 'mock hello api for success, and page is not 7',
         data: data,
         imgUrl: img,
-        code: 0
       },
       'error': {
         msg: 'mock hello api for error, and page is not 7',
-        code: 1
       }
     }
   }
+
+  let status = '200'
   // 如果没有key，则默认数据为success
   if (key && switchDatas[key]) {
     rst = switchDatas[key]
+    status = '401'
   } else {
     rst = switchDatas['success']
   }
   
   // 我们可以通过获取params里的值，根据需要来控制返回怎样的数据
-  return rst
+  return {
+    message: 'error message',
+    result: rst,
+    status: '200'
+  }
 }
