@@ -101,7 +101,8 @@ module.exports = class extends Generator {
         globOptions: {
           // https://github.com/isaacs/node-glob
           dot: true,
-          ignore: ['**/@selections']
+          ignore: ['**/@selections/**'],
+          gitignore: false
         }
       }
     );
