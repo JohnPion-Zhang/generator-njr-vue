@@ -29,7 +29,7 @@ function _request(type, url, params, resolve, reject, conf) {
   // }
   axios[type](url, paramsProcessed, config)
     .then((res) => {
-      _dealResponse(res, resolve, reject, url)
+      _dealResponse(res, resolve, reject)
     }).catch(err => {
       // 捕获不是ajax获取后，状态码造成的异常
       // code 999，是为了标识网络故障（已和数据员和后端商量确定）
@@ -46,7 +46,7 @@ function _request(type, url, params, resolve, reject, conf) {
  * @param {*} resolve
  * @param {*} reject
  */
-function _dealResponse(res, resolve, reject, url) {
+function _dealResponse(res, resolve, reject) {
   const data = res.data || res
   const status = data.status
   // status状态码含义
