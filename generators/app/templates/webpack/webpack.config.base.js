@@ -30,6 +30,9 @@ function resolve(dir) {
 // 网站图标配置
 const favicon = resolve('favicon.ico')
 
+// 指定以__base64为后缀的svg转为base64
+const svgBase64Reg = /__base64\.(svg)(\?.*)?$/
+
 // __dirname: 总是返回被执行的 js 所在文件夹的绝对路径
 // __filename: 总是返回被执行的 js 的绝对路径
 // process.cwd(): 总是返回运行 node 命令时所在的文件夹的绝对路径
@@ -55,7 +58,19 @@ const config = {
   module: {
     rules: [
       {
+        test: /\.(svg)(\?.*)?$/,
+        include: svgBase64Reg,
+        loader: 'url-loader',
+        options: {
+          limit: 99999,
+          name: isProduction
+            ? 'static/font/[name].[hash:8].[ext]'
+            : 'static/font/[name].[ext]'
+        }
+      },
+      {
         test: /\.(png|jpe?g|gif|svg|ico)(\?.*)?$/,
+        exclude: svgBase64Reg,
         loader: 'file-loader',
         options: {
           name: isProduction
