@@ -8,9 +8,15 @@ import App from './app'
 import './plugins'
 import 'filters'
 import 'directives'
+<% if (includeVuex) { -%>
+import store from './store'
+<% } -%>
 
 new Vue({
   el: '#app',
   router,
+<% if (includeVuex) { -%>
+  store,
+<% } -%>
   render: createElement => createElement(App)
 })

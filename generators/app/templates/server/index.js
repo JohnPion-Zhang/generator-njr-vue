@@ -47,7 +47,11 @@ app.use(async (ctx, next) => {
 // 模拟数据返回
 const mockRoot = '../mock'
 app.use(async (ctx, next) => {
-  if (!ctx.path.startsWith('/mock-switch')) {
+  if (!ctx.path.startsWith('/mock-switch') &&
+      ctx.path !== '/' &&
+      ctx.path !== '/favicon.ico' &&
+      ctx.path.indexOf('hot-update.json') === -1
+  ) {
   // 计时
     const start = new Date()
     // 模拟

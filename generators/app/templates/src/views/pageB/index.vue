@@ -17,7 +17,11 @@
 .pageB {
   .content {
     position: relative;
+<% if (!isPc) { -%>
+    width: 750px;
+<% } else { -%>
     width: 1200px;
+<% } -%>
     height: 400px;
     margin: 0 auto;
     animation-duration: 1s;

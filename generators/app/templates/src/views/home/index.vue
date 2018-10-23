@@ -7,7 +7,8 @@
       </h1>
       <a
         href="https://github.com/CodeLittlePrince/blog"
-        target="__blank">
+        target="__blank"
+      >
         <div class="cover"></div>
       </a>
     </div>
@@ -16,9 +17,19 @@
 
 <script>
 import mixinsSample from 'mixins/sample'
+<% if (includeVuex) { -%>
+import { mapGetters, mapActions } from 'vuex'
+<% } -%>
 
 export default {
   mixins: [mixinsSample],
+<% if (includeVuex) { -%>
+  computed: {
+    ...mapGetters([
+      'name'
+    ])
+  },
+<% } -%>
   mounted() {
     // ajax get data
     // this.$ajax.post('/home/hello', { page: 7 }) // FOR POST
@@ -36,6 +47,17 @@ export default {
     ).catch(err => {
       console.error(err.text)
     })
+<% if (includeVuex) { -%>
+    // vuex action
+    this.ageIncrease()
+    // vuex getter
+    console.log(`%cvuex getter ${this.name}`, 'color: pink')
+  },
+  methods: {
+    ...mapActions([
+      'ageIncrease'
+    ])
+<% } -%>
   }
 }
 </script>
@@ -47,7 +69,11 @@ export default {
 .home {
   .content {
     position: relative;
+<% if (!isPc) { -%>
+    width: 750px;
+<% } else { -%>
     width: 1200px;
+<% } -%>
     height: 400px;
     margin: 0 auto;
     animation-duration: 1s;

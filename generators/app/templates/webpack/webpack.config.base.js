@@ -1,24 +1,14 @@
 const path = require('path')
-
-// 为了抽离出两份CSS，创建两份ExtractTextPlugin
-// base作为基础的css，基本不变，所以，可以抽离出来充分利用浏览器缓存
-// app作为迭代的css，会经常改变
 const isProduction = process.env.NODE_ENV === 'production'
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const extractBaseCSS =
-  new ExtractTextPlugin(
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const VueLoaderPluginInstance = new VueLoaderPlugin()
+
+const extractCSS =
+  new MiniCssExtractPlugin(
     {
-      filename:'static/css/base.[contenthash:8].css',
-      allChunks: true,
-      disable: !isProduction // 开发环境下不抽离css
-    }
-  )
-const extractAppCSS
-  = new ExtractTextPlugin(
-    {
-      filename:'static/css/app.[contenthash:8].css',
-      allChunks: true,
-      disable: !isProduction // 开发环境下不抽离css
+      filename: isProduction ? 'static/css/[name].[contenthash:8].css' : 'static/css/[name].css',
+      chunkFilename: isProduction ? 'static/css/[name].[contenthash:8].css' : 'static/css/[name].css',
     }
   )
 
@@ -51,11 +41,13 @@ const config = {
       componentsBase: resolve('src/componentsBase/'),
       directives: resolve('src/directives/'),
       filters: resolve('src/filters/'),
-      mixins: resolve('src/mixins/')
+      mixins: resolve('src/mixins/'),
+      plugins: resolve('src/plugins')
     }
   },
   // loaders处理
   module: {
+    noParse: /^(vue|vue-router|vuex)$/,
     rules: [
       {
         test: /\.(svg)(\?.*)?$/,
@@ -79,7 +71,7 @@ const config = {
         }
       },
       {
-        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/i,
         loader: 'url-loader',
         options: {
           limit: 8192,
@@ -88,35 +80,32 @@ const config = {
             : 'static/font/[name].[ext]'
         }
       },
+      // https://vue-loader.vuejs.org/zh/migrating.html#%E5%80%BC%E5%BE%97%E6%B3%A8%E6%84%8F%E7%9A%84%E4%B8%8D%E5%85%BC%E5%AE%B9%E5%8F%98%E6%9B%B4
       {
         test: /\.(css|scss)$/,
-        include: [
-          resolve('src/common/scss'),
-          resolve('node_modules')
-        ],
-        use: extractBaseCSS.extract({
-          fallback: 'style-loader',
-          use: [
-            {
-              loader: 'css-loader',
-              options: {
-                sourceMap: true
-              }
-            },
-            {
-              loader: 'postcss-loader',
-              options: {
-                sourceMap: true
-              }
-            },
-            {
-              loader: 'sass-loader',
-              options: {
-                sourceMap: true
-              }
+        use: [
+          {
+            loader: !isProduction ? 'vue-style-loader' : MiniCssExtractPlugin.loader
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: true
             }
-          ]
-        })
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: true
+            }
+          },
+          {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: true
+            }
+          }
+        ]
       },
       {
         test: /\.js$/,
@@ -129,35 +118,7 @@ const config = {
       {
         test: /\.vue$/,
         exclude: /node_modules/,
-        loader: 'vue-loader',
-        options: {
-          extractCSS: true,
-          loaders: {
-            scss: extractAppCSS.extract({
-              fallback: 'vue-style-loader',
-              use: [
-                {
-                  loader: 'css-loader',
-                  options: {
-                    sourceMap: true
-                  }
-                },
-                {
-                  loader: 'postcss-loader',
-                  options: {
-                    sourceMap: true
-                  }
-                },
-                {
-                  loader: 'sass-loader',
-                  options: {
-                    sourceMap: true
-                  }
-                }
-              ]
-            })
-          }
-        }
+        loader: 'vue-loader'
       }
     ]
   }
@@ -167,6 +128,6 @@ module.exports = {
   config,
   favicon,
   resolve,
-  extractBaseCSS,
-  extractAppCSS
+  extractCSS,
+  VueLoaderPluginInstance
 }
