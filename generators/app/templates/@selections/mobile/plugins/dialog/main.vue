@@ -2,7 +2,10 @@
   <div class="cb-dialog">
     <div class="cb-dialog-wrapper">
       <transition name="cb-dialog-fade">
-        <div class="dialog" v-show="active">
+        <div
+          v-show="active"
+          class="dialog"
+        >
           <!-- body -->
           <div class="dialog-body">
             {{ message }}
@@ -10,16 +13,26 @@
           <!-- foot -->
           <hr>
           <div class="dialog-foot">
-            <div v-if="cancel" class="cancel" @click="_handleCancel">{{ cancel }}</div>
+            <div
+              v-if="cancel"
+              class="cancel"
+              @click="_handleCancel"
+            >{{ cancel }}</div>
             <div class="hairLine"></div>
-            <div class="ok" @click="_handleOk">{{ ok }}</div>
+            <div
+              class="ok"
+              @click="_handleOk"
+            >{{ ok }}</div>
           </div>
         </div>
       </transition>
     </div>
     <!-- mask -->
     <transition name="cb-dialog-mask-fade">
-      <div class="cb-dialog-mask" v-show="active"></div>
+      <div
+        v-show="active"
+        class="cb-dialog-mask"
+      ></div>
     </transition>
   </div>
 </template>
@@ -151,4 +164,3 @@ export default {
   }
 }
 </style>
-

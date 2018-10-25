@@ -2,8 +2,8 @@
   <div class="cb-toast">
     <transition name="cb-toast-fade">
       <div
-        class="toast"
         v-show="visiable"
+        class="toast"
         @mouseenter="_clearTimer"
         @mouseleave="_startTimer"
       >
@@ -18,7 +18,7 @@
 
 <script>
 export default {
-  name: 'cbToast',
+  name: 'CbToast',
   data() {
     return {
       visiable: false,
@@ -69,7 +69,7 @@ export default {
     border-radius: 8px;
     text-align: center;
     box-sizing: border-box;
-    background-color: rgba(0, 0, 0, .7);
+    background-color: rgba(0, 0, 0, 0.7);
     font-size: 17PX;
     word-wrap: break-word;
     color: #fff;
@@ -78,7 +78,7 @@ export default {
       line-height: 1.2;
     }
   }
-  // 动画
+  /* 动画 */
   .cb-toast-fade-enter-active,
   .cb-toast-fade-leave-active {
     transition: all 0.2s;
