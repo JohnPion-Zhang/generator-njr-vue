@@ -42,7 +42,7 @@ const config = {
       directives: resolve('src/directives/'),
       filters: resolve('src/filters/'),
       mixins: resolve('src/mixins/'),
-      plugins: resolve('src/plugins')
+      plugins: resolve('src/plugins/')
     }
   },
   // loaders处理
