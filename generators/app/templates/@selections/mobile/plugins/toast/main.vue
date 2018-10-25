@@ -81,7 +81,7 @@ export default {
   // 动画
   .cb-toast-fade-enter-active,
   .cb-toast-fade-leave-active {
-    transition: all .2s;
+    transition: all 0.2s;
   }
   .cb-toast-fade-enter,
   .cb-toast-fade-leave-to {

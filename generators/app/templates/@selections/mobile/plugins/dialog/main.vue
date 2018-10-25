@@ -127,14 +127,14 @@ export default {
     top: 0;
     width: 100%;
     height: 100%;
-    opacity: .6;
+    opacity: 0.6;
     background: rgb(41, 41, 51);
     z-index: 2222;
   }
   // 动画
   .cb-dialog-fade-enter-active,
   .cb-dialog-fade-leave-active {
-    transition: all .2s;
+    transition: all 0.2s;
   }
   .cb-dialog-fade-enter,
   .cb-dialog-fade-leave-to {
@@ -143,7 +143,7 @@ export default {
   }
   .cb-dialog-mask-fade-enter-active,
   .cb-dialog-mask-fade-leave-active {
-    transition: opacity .2s;
+    transition: opacity 0.2s;
   }
   .cb-dialog-mask-fade-enter,
   .cb-dialog-mask-fade-leave-to {

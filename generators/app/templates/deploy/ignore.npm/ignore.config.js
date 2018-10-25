@@ -2,6 +2,7 @@
 module.exports = [
   'boom',
   'chai',
+  'chalk',
   'concurrently',
   'gulp',
   'gulp-tinypng',
@@ -27,6 +28,7 @@ module.exports = [
   'nightmare',
   'nodemon',
   'opn',
+  'portfinder',
   'sinon',
   'sinon-chai',
   'webpack-bundle-analyzer',
