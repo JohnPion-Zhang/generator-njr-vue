@@ -5,6 +5,9 @@ import './fastclick'
 import './vue-lazyload'
 import './toast'
 import './dialog'
+if (process.env.NODE_ENV !== 'production') {
+  import('./mock-switch')
+}
 import device from './device'
 <% } -%>
 import ajax from './ajax'
