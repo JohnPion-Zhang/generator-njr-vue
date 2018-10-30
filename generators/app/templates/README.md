@@ -81,7 +81,9 @@ componentsBase: `npm run build:componentsBase`
 #### 多状态mock数据
 本项目引入可用通过UI界面配置的方式在更改返回的mock数据。
 比如：api地址为`home/hello`，先在`mockSwitchMap.js`中配置映射关系，`url`为想要映射的api地址，`selections`为你想要定义状态的选项，`name`为名字，`value`比较特殊，`[]`表示层级，查看`mockSwitchMap.js`的示例我们可以看到，第一层有`result`和`@good`字段，`result`作为下一层的引索，`@good`，我们注意到以`@`开头，它作为一个状态，mockSwitch会自从将其值取出，作为第一层数据存在内存中，等所有的状态值都取出后拼装成最终的数据返回。
+
 同学们可以多看`mock/home/hello.js`和`mockSwitchMap.js`这组数据，还有`home`页面请求`home/hello`这个接口的返回关系就明白了。
+
 ##### mockSwitch使用场景
 比如：用户的权限等级的切换，提交数据的成功或失败的切换等
 
