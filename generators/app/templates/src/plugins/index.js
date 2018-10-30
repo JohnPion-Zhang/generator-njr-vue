@@ -5,11 +5,11 @@ import './fastclick'
 import './vue-lazyload'
 import './toast'
 import './dialog'
+import device from './device'
+<% } -%>
 if (process.env.NODE_ENV !== 'production') {
   import('./mock-switch')
 }
-import device from './device'
-<% } -%>
 import ajax from './ajax'
 <% if (includeElementUI) { -%>
 import elementUI from './element-ui'
