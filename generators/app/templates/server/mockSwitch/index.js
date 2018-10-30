@@ -9,10 +9,13 @@ new Vue({
     axios.post('/mock-switch/list')
       .then(res => {
         const data = res.data
-        data[0].selections.forEach(item => {
-          item.value = item.value.replace(/\s/g, '')
-        })
-        data[0].status = data[0].selections[0].value
+        // 默认点亮第一项
+        for (let i = 0, len = data.length; i < len; i++) {
+          data[i].selections.forEach(item => {
+            item.value = item.value.replace(/\s/g, '')
+          })
+          data[i].status = data[i].selections[0].value
+        }
         this.tableData = data
       })
   },
