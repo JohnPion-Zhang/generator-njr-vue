@@ -88,7 +88,7 @@ app.on('error', (err, ctx) => {
 // 注意：这里的端口要和webpack里devServer的端口对应
 const _server = app.listen(proxyConfig.port)
 
-// 关闭监听保证进程关闭
+// 关闭监听保证进程关闭（也可用http-graceful-shutdown）
 ;['SIGINT', 'SIGTERM'].forEach(signal => {
   process.on(signal, () => {
     _server.close(() => {
